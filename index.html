@@ -14,23 +14,23 @@
         <form id="register-form">
             <div class="full-box">
                 <label for="email">E-mail</label>
-                <input type="email" name="email" id="email" placeholder="Digite seu E-mail:">
+                <input type="email" name="email" id="email" placeholder="Digite seu E-mail:" data-min-length="20" data-required>
             </div>
             <div class="half-box spacing">
                 <label for="name">Nome</label>
-                <input type="text" name="name" id="name" placeholder="Digite seu nome:">
+                <input type="text" name="name" id="name" placeholder="Digite seu nome:" data-max-length="10" data-required>
             </div>
             <div class="half-box">
                 <label for="lastname">Sobrenome</label>
-                <input type="text" name="lastname" id="lastname" placeholder="Digite seu sobrenome:">
+                <input type="text" name="lastname" id="lastname" placeholder="Digite seu sobrenome:" data-required>
             </div>
             <div class="half-box spacing">
                 <label for="password">Senha</label>
-                <input type="password" name="password" id="password" placeholder="Digite sua senha:">
+                <input type="password" name="password" id="password" placeholder="Digite sua senha:" data-required>
             </div>
             <div class="half-box">
                 <label for="passconfirmation">Confirme senha</label>
-                <input type="password" name="passconfirmation" id="passconfirmation" placeholder="Confirme sua senha:">
+                <input type="password" name="passconfirmation" id="passconfirmation" placeholder="Confirme sua senha:" data-required>
             </div>
             <div class="full-box">
                 <input type="checkbox" name="agreement" id="agreement">
