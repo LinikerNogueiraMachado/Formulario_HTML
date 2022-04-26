@@ -5,6 +5,10 @@ class Validator {
             'data-required',
             'data-min-length',
             'data-max-length',
+            'data-email-validate',
+            'data-only-letters',
+            'data-equal',
+            'data-password-validate',
         ]
     }
 
@@ -64,35 +68,86 @@ class Validator {
         }
     }
 
+    // validação do e-mail
+    emailvalidate(input) {
+
+        // email@email.com -> email@email.com.br
+        let re = /\S+@\S+\.\S+/;
+        let email = input.value;
+        let errorMessage = `Insira um e-mail válido`;
+
+        if (!re.test(email)) {
+            this.printMessage(input, errorMessage);
+        }
+    }
+
+    // valida apenas letras nos campos nome sobrenome
+    onlyletters(input) {
+        let re = /^[A-Za-z]/;
+        let inputValue = input.value;
+        let errorMessage = `Este campo só aceita Letras`;
+
+        if (!re.test(inputValue)) {
+            this.printMessage(input, errorMessage);
+        }
+    }
+
+    // verifica se o input é requerido
+    required(input) {
+        let inputValue = input.value;
+
+        if (inputValue === '') {
+            let errorMessage = `* Campo obrigatório *`;
+            this.printMessage(input, errorMessage);
+        }
+    }
+
+    // validação do campo senha
+    passwordvalidate(input) {
+
+        // explode string em um Array 
+        let charArr = input.value.split("");
+        let uppercases = 0;
+        let numbers = 0;
+
+        for (let i = 0; charArr.length > i; i++) {
+            if (charArr[i] === charArr[i].toUpperCase() && isNaN(parseInt(charArr[i]))) {
+                uppercases++;
+            } else if (!isNaN(parseInt(charArr[i]))) {
+                numbers++;
+            }
+        }
+        if (uppercases === 0 || numbers === 0) {
+            let errorMessage = `Senha precisa ter um Caractere maiúsculo e números`;
+            this.printMessage(input, errorMessage);
+        }
+    }
+
+    // verificação das senhas se conferem
+    equal(input, inputName) {
+        let inputToCompare = document.getElementsByName(inputName)[0];
+        let errorMessage = `Senhas não conferem`;
+
+        if (input.value != inputToCompare.value) {
+            this.printMessage(input, errorMessage);
+        }
+    }
+
     // tratamento de erros
     printMessage(input, msg) {
 
         // quantidade de erros
         let errorsQty = input.parentNode.querySelector('.error-validation');
 
-        if(errorsQty === null) {
+        if (errorsQty === null) {
             let template = document.querySelector('.error-validation').cloneNode(true);
-            
             template.textContent = msg;
 
             let inputParent = input.parentNode;
-
             template.classList.remove('template');
-
             inputParent.appendChild(template);
         }
 
-    }
-
-    // verifica se o input é requerido
-    required(input) {
-
-        let inputValue = input.value;
-
-        if (inputValue === '') {
-            let errorMessage = `Este campo é obrigatório`;
-            this.printMessage(input, errorMessage);
-        }
     }
 
     // limpando as validações da tela
@@ -104,14 +159,10 @@ class Validator {
 
 let form = document.getElementById("register-form");
 let submit = document.getElementById("btn-submit");
-
 let validator = new Validator();
 
 // evento que dispara as validações
 submit.addEventListener('click', function (e) {
-
     e.preventDefault();
-
     validator.validate(form);
-
 });
